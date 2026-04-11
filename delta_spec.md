@@ -429,6 +429,12 @@ Users CANNOT:
 
 - Three levels: `loose`, `semi-strict`, `strict`
 
+**Overrides: (scoped)**
+
+- `type_strictness = loose` → accepts any type, any implicit casts 
+- `type_strictness = semi-strict` → only semi-strict and strict/concrete types unless forced.
+- `type_strictness = strict` → only strict type unless forced.
+
 **Rules:**
 
 `loose`:
@@ -436,11 +442,11 @@ Users CANNOT:
 - Implicit casts allowed freely (compiler-defined)
 
 `semi-strict`:
-- Accepts semi-strict and strict types
+- Accepts semi-strict and strict/concrete types
 - Rejects loose types unless explicitly forced via unsafe flag
 
 `strict`:
-- Accepts only strict types
+- Accepts only strict/concrete types
 - No implicit casts unless explicitly forced via unsafe flag
 
 **Notes:**
@@ -498,7 +504,7 @@ These are fixed language rules that maintain core semantics:
 
 These may be modified within a scope and revert after:
 - Memory validity behavior: `memory = unsafe | null | trap`
-- Type strictness tier: `loose | semi-strict | strict`
+- Type strictness tier: `type_strictness = loose | semi-strict | strict`
 - Implicit cast rules: `implicit_casts = off | safe | full` (bounded by strictness)
 - Error handling: `errors = ignore | trap | propagate`
 - Concurrency checks: `concurrency = unsafe | checked | restricted`
