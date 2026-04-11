@@ -362,13 +362,14 @@ Specializations follow a ranking from most to least specific. When multiple spec
 **Ranking Example:**
 
 ```cpp
-generic<T> impl() { }                                  // Rank 1
-generic<T where T: Numeric> impl() { }                 // Rank 2
-generic<T where T: Numeric, T: Comparable> impl() { }  // Rank 3
-generic<int> impl() { }                                // Rank 5
+generic<T> impl() { }                                                // Rank 1
+generic<T where T: Numeric> impl() { }                               // Rank 2
+generic<T where T: Numeric, T: Comparable> impl() { }                // Rank 3
+generic<T where T: Numeric, T: Comparable, T: Printable> impl() { }  // Rank 3
+generic<int> impl() { }                                              // Rank 5
 
 impl<int>();           // Picks Rank 5 (concrete)
-impl<float>();         // Picks Rank 2 (float is Numeric)
+impl<float>();         // Picks Rank 3, but the one with more constraints (float is Numeric and Comparable and Printable)
 impl<string>();        // Picks Rank 1 (fallback, no constraints match)
 ```
 
